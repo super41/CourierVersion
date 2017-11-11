@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TopBar">
+        <attr name="isLeftShow" format="boolean"/>
+        <attr name="isRightShow" format="boolean"/>
+        <attr name="rightDrawable" format="reference"/>
+    </declare-styleable>
+
+</resources>
