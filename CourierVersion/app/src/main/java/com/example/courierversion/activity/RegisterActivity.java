@@ -48,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.et_name);
         et_email = (EditText) findViewById(R.id.et_email);
 
+
+
         mTopbar.setTitle("快递员注册");
         mTopbar.setLeftText("返回");
         //et_name
@@ -134,12 +136,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 String email=et_email.getText().toString().trim();
-                if (TextUtils.isEmpty(email)) {
-                    mTLEmail.setError("输入您的邮箱");
+                if (!isEmail(email)) {
+                    mTLEmail.setError("请输入您正确的邮箱");
                     return;
                 }
                 Toast.makeText(RegisterActivity.this, "完善资料成功", Toast.LENGTH_SHORT).show();
                 onSubmit(name,company,email);
+                finish();
             }
         });
     }
@@ -153,4 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
         editor.commit();//提交修改
     }
 
+    public static boolean isEmail(String strEmail) {
+        String strPattern = "^[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
+        if (TextUtils.isEmpty(strPattern)) {
+            return false;
+        } else {
+            return strEmail.matches(strPattern);
+        }
+    }
 }

@@ -4,27 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.courierversion.PublicDefine;
 import com.example.courierversion.R;
 
+import com.example.courierversion.Util.PermissionUtils;
 import com.example.courierversion.Util.WifiConnect;
 import com.example.courierversion.Util.WifiUtil;
 import com.example.courierversion.view.TopBar;
 
 public class MainActivity extends AppCompatActivity {
 
-   TopBar mTopbar;
+    TopBar mTopbar;
     Button mBtnScan;
     Button mBtnRegister;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
         mTopbar.setCall(new TopBar.Call() {
            @Override
            public void onRightClick() {
-
                WifiUtil wifiUtil=new WifiUtil(MainActivity.this);
                wifiUtil.connect(wifiUtil.createWifiInfo(PublicDefine.SSID, PublicDefine.PASSWORD,PublicDefine.TYPE));
            }
        });
 
+
+        //***
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         mBtnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,ScanActivity.class);
-                startActivity(intent);
+             PermissionUtils.requestPermission(MainActivity.this, PermissionUtils.CODE_CAMERA, mPermissionGrant);
+
             }
         });
     }
@@ -87,4 +89,29 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         checkIsHaveData();
     }
+
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode){
+                case PermissionUtils.CODE_CAMERA:
+                    Intent intent=new Intent(MainActivity.this,ScanActivity.class);
+                    startActivity(intent);
+                    Log.d("xjp", "onPermissionGranted: 1");
+                    break;
+
+            }
+        }
+    };
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
+    }
+
+
 }

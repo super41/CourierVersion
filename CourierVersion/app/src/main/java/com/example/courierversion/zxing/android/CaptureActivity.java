@@ -95,6 +95,8 @@ public final class CaptureActivity extends Activity implements
                 finish();
             }
         });
+
+
     }
 
     @Override

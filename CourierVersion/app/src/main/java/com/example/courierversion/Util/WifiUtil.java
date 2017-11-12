@@ -4,11 +4,18 @@ package com.example.courierversion.Util;
  * Created by XJP on 2017/11/8.
  */
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import java.util.List;
@@ -19,6 +26,9 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.courierversion.R;
 
 import java.util.List;
 
@@ -37,8 +47,10 @@ public class WifiUtil {
 
     private WifiManager.WifiLock mWifiLock;
 
+    private Context context;
 
     public WifiUtil(Context context) {
+        this.context=context;
         mWifiManager = (WifiManager) context.getSystemService(context.WIFI_SERVICE);
 
         mWifiInfo = mWifiManager.getConnectionInfo();
@@ -50,6 +62,18 @@ public class WifiUtil {
             return mWifiManager.setWifiEnabled(true);
         }
         return  result;
+    }
+    private static void showMessageOKCancel(final Activity context, String message, DialogInterface.OnClickListener okListener) {
+        String title = context.getResources().getString(R.string.permission_apply_title);
+        String cancel=context.getResources().getString(R.string.permission_cancel);
+        String setting=context.getResources().getString(R.string.permission_setting);
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(setting, okListener)
+                .setNegativeButton(cancel, null)
+                .create()
+                .show();
     }
 
     public int checkState() {
@@ -130,6 +154,17 @@ public class WifiUtil {
     public boolean  connect(WifiConfiguration wifiConfiguration) {
 
         if (!this.openWifi()) {
+            String msg=context.getResources().getString(R.string.permission_wifi_hint);
+            showMessageOKCancel((Activity) context, msg, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                    intent.setData(uri);
+                    context.startActivity(intent);
+                }
+            });
             return false;
         }
         Log.d("xjp", "connect: loop...");

@@ -347,4 +347,6 @@ public final class CameraManager {
 				rect.top, rect.width(), rect.height(), false);
 	}
 
+
+
 }
