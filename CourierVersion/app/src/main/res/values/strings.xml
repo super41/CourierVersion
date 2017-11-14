@@ -5,6 +5,7 @@
     <string name="input_email">输入您的接收邮箱账号</string>
     <string name="to_register">前往注册</string>
     <string name="to_scan">扫码投件</string>
+    <string name="OK">OK</string>
 
     <!--申请权限相关-->
 
@@ -36,6 +37,8 @@
     <string name="permission_cancel">Cancel</string>
     <string name="permission_setting">Settings</string>
     <string name="permission_apply_title">Apply</string>
+
+
 
 
     <!--Zxing相关-->
@@ -164,5 +167,10 @@
 
     <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
     <string name="viewfinderview_status_text2">即可自动扫描</string>
+    <string name="open_flashlight">Flash on</string>
+    <string name="off_flashlight">Flash off</string>
+    <string name="write_number">Enter the number</string>
+
+
 
 </resources>

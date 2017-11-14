@@ -30,7 +30,7 @@
              android:windowSoftInputMode="adjustPan|stateHidden"
             />
         <activity
-            android:name=".activity.ScanActivity"
+            android:name=".activity.EnterNumberActivity"
             />
 
 

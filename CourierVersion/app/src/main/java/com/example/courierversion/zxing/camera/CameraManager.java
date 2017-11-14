@@ -29,7 +29,7 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 import java.io.IOException;
 
 //识别相册中二维码添加的代码
-
+//扫描框大小从4/5改成1，详见Line:222
 /**
  * This object wraps the Camera service object and expects to be the only one
  * talking to it. The implementation encapsulates the steps needed to take
@@ -219,17 +219,18 @@ public final class CameraManager {
 				// Called early, before init even finished
 				return null;
 			}
-
-//			int width = findDesiredDimensionInRange(screenResolution.x,
-//					MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
-//			int height = findDesiredDimensionInRange(screenResolution.y,
-//					MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
-			
+            //**************
+			//从4/5改成 1
 			int width = findDesiredDimensionInRange(screenResolution.x,
+				MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
+		    int height = findDesiredDimensionInRange(screenResolution.y,
+					MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+			
+			/*int width = findDesiredDimensionInRange(screenResolution.x,
 					MIN_FRAME_WIDTH, MAX_FRAME_WIDTH)*4/5;
 			int height = findDesiredDimensionInRange(screenResolution.y,
-					MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT)*4/5;
-
+					MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT)*4/5;*/ //*****
+			//***************
 			int leftOffset = (screenResolution.x - width) / 2;
 			int topOffset = (screenResolution.y - height) / 2;
 			framingRect = new Rect(leftOffset, topOffset, leftOffset + width,
@@ -348,5 +349,21 @@ public final class CameraManager {
 	}
 
 
-
+	/**
+	 *
+	 */
+	public void openLight(){
+		if (camera != null) {
+			Camera.Parameters	parameter = camera.getParameters();
+			parameter.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+			camera.setParameters(parameter);
+		}
+	}
+	public void offLight() {
+		if (camera != null) {
+			Camera.Parameters parameter = camera.getParameters();
+			parameter.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+			camera.setParameters(parameter);
+		}
+	}
 }

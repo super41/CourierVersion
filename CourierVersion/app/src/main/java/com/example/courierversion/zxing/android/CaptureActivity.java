@@ -6,18 +6,22 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.courierversion.R;
+import com.example.courierversion.activity.EnterNumberActivity;
 import com.example.courierversion.zxing.camera.CameraManager;
 import com.example.courierversion.zxing.view.ViewfinderView;
 import com.google.zxing.BarcodeFormat;
@@ -40,6 +44,8 @@ public final class CaptureActivity extends Activity implements
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
     // 相机控制
+    private Button btn_flash;
+    private Button btn_write;
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -92,7 +98,42 @@ public final class CaptureActivity extends Activity implements
 
             @Override
             public void onClick(View v) {
-                finish();
+                 finish();
+
+            }
+        });
+        btn_flash= (Button) findViewById(R.id.btn_flash);
+        btn_write= (Button) findViewById(R.id.btn_write);
+        btn_flash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hint_open=CaptureActivity.this.getResources().getString(R.string.open_flashlight);
+                String hint_off=CaptureActivity.this.getResources().getString(R.string.off_flashlight);
+                if(TextUtils.equals(hint_open,btn_flash.getText().toString())){
+                    btn_flash.setText(hint_off);
+                    cameraManager.openLight();
+                    Drawable drawable = getResources().getDrawable(
+                            R.drawable.flash_p);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                            drawable.getMinimumHeight());
+                    btn_flash.setCompoundDrawables(null, drawable, null, null);
+                }else{
+                    Drawable drawable = getResources().getDrawable(
+                            R.drawable.flash_n);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+                            drawable.getMinimumHeight());
+                    btn_flash.setCompoundDrawables(null,drawable, null,  null);
+                    btn_flash.setText(hint_open);
+                    cameraManager.offLight();
+                }
+            }
+        });
+
+        btn_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Intent intent=new Intent(CaptureActivity.this, EnterNumberActivity.class);
+                 startActivity(intent);
             }
         });
 
@@ -110,6 +151,7 @@ public final class CaptureActivity extends Activity implements
 
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         viewfinderView.setCameraManager(cameraManager);
+
 
         handler = null;
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.courierversion.view.TopBar
+        android:id="@+id/topBar"
+        app:isRightShow="false"
+        app:isLeftShow="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+    </com.example.courierversion.view.TopBar>
+
+    <com.jungly.gridpasswordview.GridPasswordView
+        android:id="@+id/pswView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        app:gpvGridColor="@color/white"
+        app:gpvLineColor="@color/enter_block"
+        app:gpvLineWidth="2dp"
+        app:gpvPasswordLength="8"
+        app:gpvPasswordTransformation="*"
+        app:gpvPasswordType="numberPassword"
+        app:gpvTextColor="@color/colorPrimary"
+        android:layout_above="@+id/tv_hint"
+        android:layout_marginBottom="5dp"
+        app:gpvTextSize="25sp" />
+      <TextView
+          android:id="@+id/tv_hint"
+          android:textColor="@color/gray"
+          android:text="请确认您输入了正确的编码"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_above="@+id/division"
+          android:layout_marginBottom="15dp"
+          />
+
+    <View
+        android:id="@+id/division"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:layout_height="1px"/>
+
+    <Button
+        android:id="@+id/btn_rights"
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_text_size"
+        android:layout_margin="10dp"
+        android:text="@string/OK"
+        android:alpha="0.5"
+        android:enabled="false"
+        android:layout_below="@+id/division"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_warm_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

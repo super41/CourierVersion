@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.courierversion.PublicDefine;
@@ -20,20 +24,26 @@ import com.example.courierversion.Util.PermissionUtils;
 import com.example.courierversion.Util.WifiConnect;
 import com.example.courierversion.Util.WifiUtil;
 import com.example.courierversion.view.TopBar;
+import com.example.courierversion.zxing.android.CaptureActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     TopBar mTopbar;
     Button mBtnScan;
     Button mBtnRegister;
+    String TAG="1";
+
+    //扫描二维码
+    private static final int SCANNING_CODE = 1;
+    private static final String DECODED_CONTENT_KEY = "codedContent";
+    private static final String DECODED_BITMAP_KEY = "codedBitmap";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
-
 
     }
 
@@ -41,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mTopbar = (TopBar) findViewById(R.id.topBar);
         mBtnScan= (Button) findViewById(R.id.btn_scan);
         mBtnRegister= (Button) findViewById(R.id.btn_register);
+
         mTopbar.setTitle("快递员端");
         mTopbar.setCall(new TopBar.Call() {
            @Override
@@ -67,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     public void checkIsHaveData(){
@@ -95,11 +108,8 @@ public class MainActivity extends AppCompatActivity {
         public void onPermissionGranted(int requestCode) {
             switch (requestCode){
                 case PermissionUtils.CODE_CAMERA:
-                    Intent intent=new Intent(MainActivity.this,ScanActivity.class);
-                    startActivity(intent);
-                    Log.d("xjp", "onPermissionGranted: 1");
+                    beginScan();
                     break;
-
             }
         }
     };
@@ -113,5 +123,9 @@ public class MainActivity extends AppCompatActivity {
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
     }
 
-
+    public void beginScan() {
+        Intent intent = new Intent(MainActivity.this,
+                CaptureActivity.class);
+        startActivityForResult(intent, SCANNING_CODE);
+    }
 }

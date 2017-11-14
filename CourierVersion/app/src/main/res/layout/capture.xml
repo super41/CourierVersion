@@ -15,27 +15,61 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
     
-    <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="top"
-        android:background="#99000000">
-        
-        <ImageButton
-            android:id="@+id/capture_imageview_back"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/selector_capture_back"/>
-        
-        <TextView 
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:layout_gravity="top"
+    android:background="#99000000">
+
+    <ImageButton
+        android:id="@+id/capture_imageview_back"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_capture_back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="#ffffffff"
+        android:textSize="20sp"
+        android:text="扫一扫"/>
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        >
+      <Button
+          android:id="@+id/btn_write"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/write_number"
+          android:background="@null"
+          android:textColor="@color/white"
+          android:drawableTop="@drawable/btn_write_selector"
+          android:drawablePadding="10dp"
+          />
+
+        <Button
+            android:id="@+id/btn_flash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#ffffffff"
-            android:textSize="20sp"
-            android:text="扫一扫"/>
-        
-    </RelativeLayout>
+            android:text="@string/open_flashlight"
+            android:background="@null"
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="70dp"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/flash_n"
+            />
+
+    </LinearLayout>
+
+
 
 </merge>
