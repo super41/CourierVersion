@@ -8,6 +8,8 @@
     <string name="to_register">前往注册</string>
     <string name="to_scan">扫码投件</string>
     <string name="OK">确定</string>
+    <string name="please_write">请输入号码...</string>
+    <string name="please_ensure">请确认您输入了正确的号码</string>
 
 
     <string name="permission_get_accounts_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_GET_ACCOUNTS</string>
@@ -24,5 +26,6 @@
     <string name="permission_cancel">取消</string>
     <string name="permission_setting">去设置</string>
     <string name="permission_apply_title">权限申请</string>
+    <string name="tv_now_status">当前状态:</string>
 
 </resources>

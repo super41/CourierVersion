@@ -8,7 +8,7 @@ import com.example.courierversion.Util.WifiConnect;
 public class PublicDefine {
     public   static final String SP_INFO="sp_info";
 
-    public static final String SSID="super";
-    public static final String PASSWORD="qweasdzxc";
+    public static final String SSID="brize_box";
+    public static final String PASSWORD="brizebox00";
     public static final int   TYPE=3;
 }

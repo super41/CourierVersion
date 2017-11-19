@@ -63,6 +63,10 @@ public class WifiUtil {
         }
         return  result;
     }
+
+    public boolean isOpen(){
+        return mWifiManager.isWifiEnabled();
+    }
     private static void showMessageOKCancel(final Activity context, String message, DialogInterface.OnClickListener okListener) {
         String title = context.getResources().getString(R.string.permission_apply_title);
         String cancel=context.getResources().getString(R.string.permission_cancel);
@@ -135,7 +139,8 @@ public class WifiUtil {
     }
 
     public String getSSID() {
-        return  (mWifiInfo == null) ? "NULL" : mWifiInfo.getSSID();
+        mWifiInfo = mWifiManager.getConnectionInfo();
+        return  (mWifiInfo == null) ? "NULL" : mWifiInfo.getSSID().trim();
     }
 
     public int getIpAddress() {

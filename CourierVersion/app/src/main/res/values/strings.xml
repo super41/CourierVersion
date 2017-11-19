@@ -6,6 +6,8 @@
     <string name="to_register">前往注册</string>
     <string name="to_scan">扫码投件</string>
     <string name="OK">OK</string>
+    <string name="please_write">请输入号码...</string>
+    <string name="please_ensure">请确认您输入了正确的号码</string>
 
     <!--申请权限相关-->
 
@@ -170,7 +172,7 @@
     <string name="open_flashlight">Flash on</string>
     <string name="off_flashlight">Flash off</string>
     <string name="write_number">Enter the number</string>
-
+    <string name="tv_now_status">current state</string>
 
 
 </resources>

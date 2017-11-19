@@ -3,6 +3,7 @@ package com.example.courierversion.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,6 +26,9 @@ import com.example.courierversion.Util.WifiConnect;
 import com.example.courierversion.Util.WifiUtil;
 import com.example.courierversion.view.TopBar;
 import com.example.courierversion.zxing.android.CaptureActivity;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
         mTopbar.setCall(new TopBar.Call() {
            @Override
            public void onRightClick() {
-               WifiUtil wifiUtil=new WifiUtil(MainActivity.this);
-               wifiUtil.connect(wifiUtil.createWifiInfo(PublicDefine.SSID, PublicDefine.PASSWORD,PublicDefine.TYPE));
+              // WifiUtil wifiUtil=new WifiUtil(MainActivity.this);
+              // wifiUtil.connect(wifiUtil.createWifiInfo(PublicDefine.SSID, PublicDefine.PASSWORD,PublicDefine.TYPE));
+               Toast.makeText(MainActivity.this, "修改信息页面下次再搞进来...", Toast.LENGTH_SHORT).show();
            }
        });
 
@@ -127,5 +132,35 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this,
                 CaptureActivity.class);
         startActivityForResult(intent, SCANNING_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == SCANNING_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                String content = data.getStringExtra(DECODED_CONTENT_KEY);
+                //Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
+                if(content==null || content.length()!=8 || ! isNumeric(content)){
+                    Toast.makeText(MainActivity.this,"二维码格式不对",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Log.d(TAG, "onActivityResult: "+content);
+                Intent intent=new Intent(MainActivity.this,WifiConnectActivity.class);
+                intent.putExtra("qr_code",content);
+                startActivity(intent);
+            }
+        }
+    }
+
+    public boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
     }
 }
