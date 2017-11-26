@@ -88,8 +88,8 @@ public class SockeTestActivity extends AppCompatActivity implements SocketUtil.S
     }
 
     @Override
-    public void onResult(String s) {
-        et_input.append(s);
-        Log.d(TAG, "onResult: "+s);
+    public void onResult(byte[] s) {
+
+        //Log.d(TAG, "onResult: "+s);
     }
 }

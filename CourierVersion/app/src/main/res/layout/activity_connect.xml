@@ -1,128 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.example.courierversion.view.TopBar
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:isRightShow="false"
-        />
+        app:title="@string/connection"
+        app:isRightShow="false" />
 
-    <TextView
-        android:id="@+id/tv_qrcode"
-        android:layout_below="@+id/topBar"
-        android:layout_marginTop="55dp"
-        android:layout_centerHorizontal="true"
+    <LinearLayout
+        android:id="@+id/ll_info"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/colorAccent"
+                android:text="WIFI: " />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/colorAccent"
+                android:text="Password: " />
+
+            <TextView
+                android:text="QR Code: "
+                android:gravity="right"
+                android:textColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="brize_box" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="brizebox00" />
+
+            <TextView
+                android:id="@+id/tv_qrcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_info"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="-----------Connecting to brize_box for you-----------"
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_wifi_selector" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/tv_now_status" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_socket"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="-----Please close to the parcel box within 2m-----"
+                android:textColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/socket_connection" />
+
+                    <TextView
+                        android:id="@+id/tv_socket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/send_data" />
+
+                    <TextView
+                        android:id="@+id/tv_send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/receive_data" />
+
+                    <TextView
+                        android:id="@+id/tv_receive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_retry"
+        android:text="@string/retry"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_warm_selector"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/tv_tips"
+        android:textSize="21sp"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content" />
-
-
-  <LinearLayout
-      android:layout_centerInParent="true"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      >
-
-      <LinearLayout
-          android:orientation="vertical"
-          android:layout_weight="1"
-          android:layout_width="0dp"
-          android:gravity="center_horizontal"
-          android:layout_height="wrap_content">
-
-          <ImageView
-              android:id="@+id/img_wifi"
-              android:src="@drawable/img_wifi_selector"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              android:orientation="horizontal"
-              >
-              <TextView
-                  android:text="@string/tv_now_status"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-              <TextView
-                  android:id="@+id/tv_status"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-          </LinearLayout>
-
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:orientation="vertical"
-          android:layout_weight="1"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content">
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              android:orientation="horizontal"
-              >
-              <TextView
-                  android:text="Socket连接:"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-              <TextView
-                  android:id="@+id/tv_socket"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-          </LinearLayout>
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              android:orientation="horizontal"
-              >
-              <TextView
-                  android:text="发送数据:"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-              <TextView
-                  android:id="@+id/tv_send"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              android:orientation="horizontal"
-              >
-              <Button
-                  android:id="@+id/btn_connect"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="连接"
-                  android:textColor="@color/white"
-                  android:background="@drawable/btn_warm_selector"
-                  />
-              <Button
-                  android:id="@+id/btn_send"
-                  android:text="发送"
-                  android:textColor="@color/white"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/btn_warm_selector"
-                  />
-          </LinearLayout>
-
-      </LinearLayout>
-
-      </LinearLayout>
-
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tips"
+        android:textColor="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

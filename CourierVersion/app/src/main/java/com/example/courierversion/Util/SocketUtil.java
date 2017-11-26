@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,14 +33,15 @@ public class SocketUtil {
     boolean work = false;
     Activity activity;
     SocketImp socketImp;
-    private static final String HOST = "172.23.21.1";
+    private static final String HOST = "192.168.4.1";
     private static final int PORT = 6341;
     private static final int TIMEOUT = 5000;
+    static final String TAG="xjp";
 
     static final int MSG_CONNECT = 0;
     static final int MSG_RESULT = 1;
     static final int MSG_SEND=2;
-    String result="";
+    byte[] result=null;
 
     final int CALL_SUCCESS = 0;
     final int CALL_RESULT = 1;
@@ -69,7 +71,7 @@ public class SocketUtil {
                                 onCall(CALL_TIMEOUT);
                                 break;
                             case CALL_RESULT:
-                                result= (String) msg.obj;
+                                result= (byte[]) msg.obj;
                                 onCall(CALL_RESULT);
                                 break;
                             case CALL_FAIL:
@@ -122,8 +124,19 @@ public class SocketUtil {
             super.run();
             while (work) {
                 try {
-                    result = dis.readUTF();
-                    sendMsg(MSG_RESULT,CALL_RESULT,result);
+                    Log.d("xjpll", "run: 0");
+                    byte[] b=new byte[1024];
+                    Log.d("xjpll", "run: 1");
+                    int size=dis.read(b);//
+                    if(size<0){
+                        return;
+                    }
+                    result=new byte[size];
+                    for(int i=0;i<size;i++){
+                        result[i]=b[i];
+                    }
+                    Log.d("xjpll", "run: 2");
+                    sendMsg(MSG_RESULT,CALL_RESULT,0,result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -137,12 +150,29 @@ public class SocketUtil {
 
     public void doSend(String s){
         try {
-            //dos.writeUTF(s);
-            byte[] b=s.getBytes();
+            byte[] b=getByte(s);
             dos.write(b);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public  static byte[]  getByte(String s){
+        int length=s.length()+7;
+        byte[] b=new byte[length];
+        b[0]= (byte) 0xFF;
+        b[1]= (byte) 0xAA;
+        b[2]= (byte)(length-3);
+        b[3]= (byte)0x08;
+        char[] c=s.toCharArray();
+        for(int i=0;i<s.length();i++){
+            b[4+i]=(byte)c[i];
+        }
+        b[s.length()+4]=(byte)(s.length()+4);
+        b[s.length()+5]=(byte)0xFF;
+        b[s.length()+6]=(byte)0x55;
+        SocketUtil.printHexString(b);
+        return  b;
     }
 
     void sendMsg(int what){
@@ -154,6 +184,9 @@ public class SocketUtil {
     void sendMsg(int what,int arg1,String s){
         mHandler.sendMessage(mHandler.obtainMessage(what,arg1,0,s));
     }
+    void sendMsg(int what,int arg1,int arg2,Object o){
+        mHandler.sendMessage(mHandler.obtainMessage(what,arg1,0,o));
+    }
 
    public  interface SocketImp {
         void onSuccess();
@@ -162,7 +195,7 @@ public class SocketUtil {
 
         void onFail();
 
-        void onResult(String s);
+        void onResult(byte[] s);
     }
 
     void onCall(int TYPE) {
@@ -200,6 +233,17 @@ public class SocketUtil {
                 });
                 break;
         }
+    }
+
+    public static void printHexString( byte[] b) {
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            Log.i(TAG, hex.toUpperCase());
+        }
+
     }
 
 }

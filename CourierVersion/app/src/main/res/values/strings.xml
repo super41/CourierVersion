@@ -1,13 +1,13 @@
 ﻿<resources>
     <string name="app_name">Courier version</string>
-    <string name="input_name">输入您的姓名</string>
-    <string name="input_company">输入您所属公司的名称</string>
-    <string name="input_email">输入您的接收邮箱账号</string>
-    <string name="to_register">前往注册</string>
-    <string name="to_scan">扫码投件</string>
+    <string name="input_name">Please enter your name</string>
+    <string name="input_company">Please enter the name of your company</string>
+    <string name="input_email">Please enter your receiving email account</string>
+    <string name="to_register">Go to Register</string>
+    <string name="to_scan">Scan QR Code</string>
     <string name="OK">OK</string>
-    <string name="please_write">请输入号码...</string>
-    <string name="please_ensure">请确认您输入了正确的号码</string>
+    <string name="please_write">Please enter the number ...</string>
+    <string name="please_ensure">Please confirm that you have entered the correct number</string>
 
     <!--申请权限相关-->
 
@@ -35,7 +35,7 @@
     <string name="permission_white_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
     <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
 
-    <string name="permission_wifi_hint">Turn on WIFI permissions in Permission Settings to establish a connection between you and the package box</string>
+    <string name="permission_wifi_hint">Turn on WIFI permissions in Permission Settings to establish a connection between your phone and the package box</string>
     <string name="permission_cancel">Cancel</string>
     <string name="permission_setting">Settings</string>
     <string name="permission_apply_title">Apply</string>
@@ -167,12 +167,46 @@
     <string name="sbc_name">Google Book Search</string>
     <string name="wifi_changing_network">Requesting connection to network\u2026</string>
 
-    <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
-    <string name="viewfinderview_status_text2">即可自动扫描</string>
+    <string name="viewfinderview_status_text1">Put QR code into the viewfinder frame</string>
+    <string name="viewfinderview_status_text2">It automatically scans</string>
     <string name="open_flashlight">Flash on</string>
     <string name="off_flashlight">Flash off</string>
     <string name="write_number">Enter the number</string>
-    <string name="tv_now_status">current state</string>
-
+    <string name="tv_now_status">Current State:</string>
+    <string name="courier_terminal">Courier Terminal</string>
+    <string name="scan_one_scan">Scan</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="please_enter_number">Please enter the number...</string>
+<!--wifi status-->
+    <string name="wifi_close">Close</string>
+    <string name="wifi_opening">Opening</string>
+    <string name="wifi_already_open">Already open</string>
+    <string name="wifi_disconnecting">Disconnecting...</string>
+    <string name="wifi_open_not_connected">"Open,but not connected"</string>
+    <string name="wifi_connected_wrong">Connect the wrong WiFi:</string>
+    <string name="wifi_connected_right">Already connected to</string>
+    <string name="wifi_connected">Connected</string>
+    <string name="wifi_connecting">Connecting</string>
+    <string name="socket_connection">Socket Connection:</string>
+    <string name="send_data">Send:</string>
+    <string name="receive_data">Receive:</string>
+    <string name="tips">tips: if the connection fails, you can click Retry</string>
+    <string name="connection">Connection</string>
+    <string name="info_change">Information Modification</string>
+    <string name="name">Name:</string>
+    <string name="company">Company:</string>
+    <string name="email">Email:</string>
+    <string name="modify">Modify</string>
+    <string name="change_info_success">Modify data successfully</string>
+    <string name="enter_right_email">Please enter the correct email</string>
+    <string name="submit_info_success">Successfully complete information</string>
+    <string name="finish">Complete</string>
+    <string name="register">Register</string>
+    <string name="connection_timed_out">Connection Timed Out</string>
+    <string name="connection_failed">Connection Failed</string>
+    <string name="connection_success">Connection Success</string>
+    <string name="retry">Retry</string>
+    <string name="parcel_delivery">Parcel Delivery</string>
+    <string name="all_done">Please open the door to vote, and then close the door to complete the investment, thank you!</string>
 
 </resources>

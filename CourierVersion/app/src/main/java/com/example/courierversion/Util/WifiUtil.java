@@ -78,6 +78,7 @@ public class WifiUtil {
                 .setNegativeButton(cancel, null)
                 .create()
                 .show();
+
     }
 
     public int checkState() {

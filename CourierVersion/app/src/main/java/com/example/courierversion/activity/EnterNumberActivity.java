@@ -37,7 +37,7 @@ public class EnterNumberActivity extends AppCompatActivity {
 
 
     GridPasswordView pswView;
-    TopBar topBar;
+
     TextView tv_hint;
     Button btn_right;
     Handler handler;
@@ -93,8 +93,7 @@ public class EnterNumberActivity extends AppCompatActivity {
         pswView= (GridPasswordView) findViewById(R.id.pswView);
         pswView.setPasswordVisibility(true);
         tv_hint= (TextView) findViewById(R.id.tv_hint);
-        topBar= (TopBar) findViewById(R.id.topBar);
-        topBar.setTitle("输入号码");
+
         btn_right= (Button) findViewById(R.id.btn_rights);
         pswView.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
             //正在输入密码时执行此方法

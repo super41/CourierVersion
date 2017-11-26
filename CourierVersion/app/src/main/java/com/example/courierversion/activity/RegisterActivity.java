@@ -21,7 +21,7 @@ import com.example.courierversion.view.TopBar;
  * Created by XJP on 2017/11/5.
  */
 public class RegisterActivity extends AppCompatActivity {
-    TopBar mTopbar;
+
     Button mBtnFinish;
     TextInputLayout mTLName;
     TextInputLayout mTLCompany;
@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        mTopbar = (TopBar) findViewById(R.id.topBar);
+
         mTLName = (TextInputLayout) findViewById(R.id.tl_name);
         mTLCompany = (TextInputLayout) findViewById(R.id.tl_company);
         mTLEmail = (TextInputLayout) findViewById(R.id.tl_email);
@@ -48,10 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.et_name);
         et_email = (EditText) findViewById(R.id.et_email);
 
-
-
-        mTopbar.setTitle("快递员注册");
-        mTopbar.setLeftText("返回");
         //et_name
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,7 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
-                    mTLName.setError("输入您的用户名");
+                    String tips=getResources().getString(R.string.input_name);
+                    mTLName.setError(tips);
                     mTLName.setErrorEnabled(true);
                 } else {
                     mTLName.setErrorEnabled(false);
@@ -90,7 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
-                    mTLCompany.setError("输入您的公司");
+                    String tips=getResources().getString(R.string.input_company);
+                    mTLCompany.setError(tips);
                     mTLCompany.setErrorEnabled(true);
                 } else {
                     mTLCompany.setErrorEnabled(false);
@@ -112,7 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s.toString().trim())) {
-                    mTLEmail.setError("输入您的邮箱");
+                    String tips=getResources().getString(R.string.input_email);
+                    mTLEmail.setError(tips);
                     mTLEmail.setErrorEnabled(true);
                 } else {
                     mTLEmail.setErrorEnabled(false);
@@ -123,24 +122,32 @@ public class RegisterActivity extends AppCompatActivity {
         mBtnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name=et_name.getText().toString().trim();
-                if (TextUtils.isEmpty(name)) {
-                    mTLName.setError("输入您的姓名");
+                String name=et_name.getText().toString();
+                if (TextUtils.isEmpty(name.trim())) {
+                    String tips=getResources().getString(R.string.input_name);
+                    mTLName.setError(tips);
                     return;
                 }
 
-                String company=et_company.getText().toString().trim();
-                if (TextUtils.isEmpty(company)) {
-                    mTLCompany.setError("输入您的公司");
+                String company=et_company.getText().toString();
+                if (TextUtils.isEmpty(company.trim())) {
+                    String tips=getResources().getString(R.string.input_company);
+                    mTLCompany.setError(tips);
                     return;
                 }
 
-                String email=et_email.getText().toString().trim();
+                String email=et_email.getText().toString();
+                if (TextUtils.isEmpty(email.trim())) {
+                    String tips=getResources().getString(R.string.input_email);
+                    mTLEmail.setError(tips);
+                    return;
+                }
                 if (!isEmail(email)) {
-                    mTLEmail.setError("请输入您正确的邮箱");
+                    String tips=getResources().getString(R.string.enter_right_email);
+                    mTLEmail.setError(tips);
                     return;
                 }
-                Toast.makeText(RegisterActivity.this, "完善资料成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, R.string.submit_info_success, Toast.LENGTH_SHORT).show();
                 onSubmit(name,company,email);
                 finish();
             }

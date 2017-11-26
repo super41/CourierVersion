@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
         mBtnScan= (Button) findViewById(R.id.btn_scan);
         mBtnRegister= (Button) findViewById(R.id.btn_register);
 
-        mTopbar.setTitle("快递员端");
         mTopbar.setCall(new TopBar.Call() {
            @Override
            public void onRightClick() {
-              // WifiUtil wifiUtil=new WifiUtil(MainActivity.this);
-              // wifiUtil.connect(wifiUtil.createWifiInfo(PublicDefine.SSID, PublicDefine.PASSWORD,PublicDefine.TYPE));
-               Toast.makeText(MainActivity.this, "修改信息页面下次再搞进来...", Toast.LENGTH_SHORT).show();
+              Intent intent=new Intent(MainActivity.this,InfoChangeActivity.class);
+               startActivity(intent);
+
+
            }
        });
 

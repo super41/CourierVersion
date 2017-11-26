@@ -11,6 +11,7 @@
         android:id="@+id/topBar"
         app:isRightShow="false"
         app:isLeftShow="true"
+        app:title="@string/enter_number"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
@@ -34,7 +35,7 @@
       <TextView
           android:id="@+id/tv_hint"
           android:textColor="@color/gray"
-          android:text="请确认您输入了正确的编码"
+          android:text="@string/please_enter_number"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerHorizontal="true"

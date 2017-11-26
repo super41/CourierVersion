@@ -24,6 +24,7 @@ public class TopBar extends RelativeLayout {
     Boolean mIsLeftbtnShow;
     Boolean mIsRightbtnShow;
     int mRightDrawable;
+    String mTitle;
 
     Call call;
 
@@ -40,7 +41,9 @@ public class TopBar extends RelativeLayout {
         mIsLeftbtnShow = typedArray.getBoolean(R.styleable.TopBar_isLeftShow, true);
         mIsRightbtnShow = typedArray.getBoolean(R.styleable.TopBar_isRightShow, true);
         mRightDrawable = typedArray.getResourceId(R.styleable.TopBar_rightDrawable, R.mipmap.ic_launcher);
+        mTitle=typedArray.getString(R.styleable.TopBar_title);
         //setView
+        mBtnTitle.setText(mTitle == null ? "" : mTitle);
         mBtnLeft.setVisibility( mIsLeftbtnShow  ? VISIBLE : GONE);
         mBtnRight.setVisibility(mIsRightbtnShow ? VISIBLE : GONE);
         mBtnRight.setBackgroundResource(mRightDrawable);

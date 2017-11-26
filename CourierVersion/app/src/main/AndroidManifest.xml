@@ -40,6 +40,14 @@
            >
 
         </activity>
+        <activity
+            android:name=".activity.InfoChangeActivity"
+            />
+
+        <activity
+            android:launchMode="singleTop"
+            android:name=".activity.SuccessActivity"
+            />
 
 
         <!--Zxing相关,注意全类名是否正确！！！-->

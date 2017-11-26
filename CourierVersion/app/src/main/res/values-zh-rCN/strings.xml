@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Courier version</string>
+    <string name="app_name">快递员端</string>
     <string name="input_name">输入您的姓名</string>
     <string name="input_company">输入您所属公司的名称</string>
     <string name="input_email">输入您的接收邮箱账号</string>
@@ -22,10 +22,53 @@
     <string name="permission_white_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
     <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
 
+
+    <string name="viewfinderview_status_text1">将二维码/条码放入取景框内</string>
+    <string name="viewfinderview_status_text2">即可自动扫描</string>
+    <string name="open_flashlight">打开手电筒</string>
+    <string name="off_flashlight">关闭手电筒</string>
+    <string name="write_number">手动输入号码</string>
     <string name="permission_wifi_hint">在权限设置中开启WIFI权限，来为您与包裹箱建立连接</string>
     <string name="permission_cancel">取消</string>
     <string name="permission_setting">去设置</string>
     <string name="permission_apply_title">权限申请</string>
     <string name="tv_now_status">当前状态:</string>
+    <string name="courier_terminal">快递员端</string>
+    <string name="scan_one_scan">扫一扫</string>
+    <string name="enter_number">输入号码</string>
+    <string name="please_enter_number">请输入号码...</string>
+
+    <!--wifi status-->
+    <string name="wifi_close">关闭</string>
+    <string name="wifi_opening">正在打开</string>
+    <string name="wifi_already_open">已经打开</string>
+    <string name="wifi_disconnecting">正在断开...</string>
+    <string name="wifi_open_not_connected">"已经打开，未连接"</string>
+    <string name="wifi_connected_wrong">连接上了错误的wifi:</string>
+    <string name="wifi_connected_right">已经连接上</string>
+    <string name="wifi_connected">已连接</string>
+    <string name="wifi_connecting">正在连接</string>
+    <string name="socket_connection">Socket连接:</string>
+    <string name="send_data">发送数据:</string>
+    <string name="receive_data">接收数据:</string>
+    <string name="tips">提示: 如果连接失败，你可以点击重试</string>
+    <string name="connection">连接</string>
+    <string name="info_change">修改信息</string>
+    <string name="name">姓名:</string>
+    <string name="company">公司:</string>
+    <string name="email">邮箱:</string>
+    <string name="modify">修改</string>
+    <string name="change_info_success">修改资料成功</string>
+    <string name="enter_right_email">请输入正确的邮箱</string>
+    <string name="submit_info_success">完善资料成功</string>
+    <string name="finish">完成</string>
+    <string name="register">注册</string>
+    <string name="connection_timed_out">连接超时</string>
+    <string name="connection_failed">连接失败</string>
+    <string name="connection_success">连接服务端成功</string>
+    <string name="retry">重试</string>
+    <string name="parcel_delivery">投件</string>
+    <string name="all_done">请开门投件，然后关上门，完成投件，谢谢！</string>
+
 
 </resources>

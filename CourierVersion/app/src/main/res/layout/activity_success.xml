@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+      <com.example.courierversion.view.TopBar
+          android:id="@+id/topBar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:isLeftShow="false"
+          app:isRightShow="false"
+          app:title="@string/parcel_delivery"
+          />
+
+       <TextView
+           android:text="@string/all_done"
+           android:layout_centerInParent="true"
+           android:layout_width="match_parent"
+           android:layout_marginLeft="50dp"
+           android:layout_marginRight="50dp"
+           android:textSize="24sp"
+           android:textColor="@color/colorPrimaryDark"
+           android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_finish"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/finish"
+        android:textSize="21sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_warm_selector"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
