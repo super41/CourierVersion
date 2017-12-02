@@ -144,6 +144,16 @@ public class WifiUtil {
         return  (mWifiInfo == null) ? "NULL" : mWifiInfo.getSSID().trim();
     }
 
+    public void removeNowConnectingID(){
+        mWifiInfo = mWifiManager.getConnectionInfo();
+        if(mWifiInfo != null){
+           /* mWifiManager.removeNetwork(mWifiInfo.getNetworkId());
+            mWifiManager.saveConfiguration();
+            mWifiManager.disconnect();*/
+            disconnectWifi(mWifiInfo.getNetworkId());
+        }
+    }
+
     public int getIpAddress() {
         return (mWifiInfo == null) ? 0 : mWifiInfo.getIpAddress();
     }
@@ -253,10 +263,11 @@ public class WifiUtil {
         return  configuration;
     }
 
-    private WifiConfiguration isExsits(String SSID) {
+    public WifiConfiguration isExsits(String SSID) {
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig:
                 existingConfigs) {
+            Log.d("xjpll", "isExsits: "+existingConfigs.size());
             if (existingConfig.SSID.equals("\"" +SSID+"\"")) {
                 return  existingConfig;
             }

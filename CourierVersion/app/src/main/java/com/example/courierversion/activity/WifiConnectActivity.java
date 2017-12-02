@@ -132,11 +132,14 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
             public void onClick(View v) {
                 //如果没有连接上目标wifi,请尝试重连
                 if (!TextUtils.equals("\"brize_box\"",wifiUtil.getSSID())){
+                    wifiUtil.removeNowConnectingID();
                     handler.sendMessage(handler.obtainMessage(MSG_CONNECT));
                 }else {
                     //连上了，则建立连接
                     socketUtil.connect();
                 }
+          //    wifiUtil.removeNowConnectingID();
+               // handler.sendMessage(handler.obtainMessage(MSG_CONNECT));
             }
         });
 
@@ -225,12 +228,17 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
             trueByte[4+i]=(byte)c[i];
         }
         trueByte[s.length()+4]=(byte)0x4F;
-        trueByte[s.length()+5]=(byte)0x46;
-        trueByte[s.length()+6]=(byte)(length-3);
+        trueByte[s.length()+5]=(byte)0x4B;
+        byte sum=0;
+        for(int i=0;i<20;i++){
+            sum+=trueByte[i];
+        }
+        trueByte[s.length()+6]=(byte)sum;
         trueByte[s.length()+7]=(byte)0xFF;
         trueByte[s.length()+8]=(byte)0x55;
         for(int i=0;i<23;i++){
             if(b[i]!=trueByte[i]){
+                Log.d(TAG, "checkReply: b"+b[i]+" t "+trueByte[i]);
                 return  false;
             }
         }
@@ -300,6 +308,7 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
                                 tv_status.setText(wifi_connected_wrong);
                                 tv_status.append( wifiUtil.getSSID());
                                 img_wifi.setImageLevel(1);
+                                //wifiUtil.removeNowConnectingID();
                             }
                             Log.i("xjp", "onReceive: "+wifiUtil.getSSID());
                             break;

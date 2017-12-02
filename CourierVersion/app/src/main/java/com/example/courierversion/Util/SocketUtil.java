@@ -128,14 +128,13 @@ public class SocketUtil {
                     byte[] b=new byte[1024];
                     Log.d("xjpll", "run: 1");
                     int size=dis.read(b);//
-                    if(size<0){
+                    if(size<=0){
                         return;
                     }
                     result=new byte[size];
                     for(int i=0;i<size;i++){
                         result[i]=b[i];
                     }
-                    Log.d("xjpll", "run: 2");
                     sendMsg(MSG_RESULT,CALL_RESULT,0,result);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -165,10 +164,12 @@ public class SocketUtil {
         b[2]= (byte)(length-3);
         b[3]= (byte)0x08;
         char[] c=s.toCharArray();
+        byte sum=(byte)(b[0]+b[1]+b[2]+b[3]);
         for(int i=0;i<s.length();i++){
             b[4+i]=(byte)c[i];
+            sum+=b[4+i];
         }
-        b[s.length()+4]=(byte)(s.length()+4);
+        b[s.length()+4]=(byte)(sum);
         b[s.length()+5]=(byte)0xFF;
         b[s.length()+6]=(byte)0x55;
         SocketUtil.printHexString(b);
