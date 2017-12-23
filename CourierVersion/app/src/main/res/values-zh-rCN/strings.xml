@@ -69,6 +69,9 @@
     <string name="retry">重试</string>
     <string name="parcel_delivery">投件</string>
     <string name="all_done">请开门投件，然后关上门，完成投件，谢谢！</string>
+    <string name="loading">连接成功,正在传输...</string>
+    <string name="connect_package">连接包裹箱中...</string>
+    <string name="t_fail">传输失败</string>
 
 
 </resources>

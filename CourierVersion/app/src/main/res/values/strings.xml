@@ -209,4 +209,8 @@
     <string name="parcel_delivery">Parcel Delivery</string>
     <string name="all_done">Please open the door to vote, and then close the door to complete the investment, thank you!</string>
 
+    <string name="loading">Connected successfully，Transmitting ...</string>
+    <string name="connect_package">Connecting package box...</string>
+    <string name="t_fail">Transmission Failed</string>
+
 </resources>

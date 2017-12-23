@@ -1,10 +1,12 @@
 package com.example.courierversion.activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -53,7 +55,9 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
     //wifi连接工作线程
     HandlerThread handlerThread;
     Handler handler;
+    Handler mMainHanler;
     public final int MSG_CONNECT = 0;
+    public final int MSG_DELAYSHOW = 1;
     //广播接收
     WifiReceiver wifiReceiver;
 
@@ -62,6 +66,7 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
 
     //最下面的重试按钮
     Button btn_retry;
+    ConnectivityManager connec;
 
     //wifi 状态信息
     int wifi_close=R.string.wifi_close;
@@ -73,6 +78,8 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
     int wifi_connected_right=R.string.wifi_connected_right;
     int wifi_connected=R.string.wifi_connected;
     int wifi_connecting=R.string.wifi_connecting;
+
+    ProgressDialog p;
 
     public final String TAG = this.getClass().getSimpleName();
     public final String WIFI_STATE_CHANGE_ACTION = WifiManager.WIFI_STATE_CHANGED_ACTION;
@@ -91,6 +98,11 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
     }
 
     public void initView() {
+        p=new ProgressDialog(this);
+        p.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        p.setCancelable(false);
+        p.setMessage(getString(R.string.connect_package));
+        connec = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         img_wifi = (ImageView) findViewById(R.id.img_wifi);
         tv_status = (TextView) findViewById(R.id.tv_status);
         ll_socket= (LinearLayout) findViewById(R.id.ll_socket);
@@ -115,6 +127,20 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
             }
         };
 
+        mMainHanler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case MSG_DELAYSHOW:
+                        btn_retry.setAlpha(1.0f);
+                        btn_retry.setEnabled(true);
+                        p.dismiss();
+                        break;
+                }
+            }
+        };
+
         socketUtil = new SocketUtil(this, this);
 
         tv_send = (TextView) findViewById(R.id.tv_send);
@@ -131,15 +157,32 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
             @Override
             public void onClick(View v) {
                 //如果没有连接上目标wifi,请尝试重连
-                if (!TextUtils.equals("\"brize_box\"",wifiUtil.getSSID())){
+               /* if (!TextUtils.equals("\"brize_box\"",wifiUtil.getSSID())){
                     wifiUtil.removeNowConnectingID();
                     handler.sendMessage(handler.obtainMessage(MSG_CONNECT));
                 }else {
                     //连上了，则建立连接
                     socketUtil.connect();
+                }*/
+
+                if ((connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+                        &&
+                        TextUtils.equals("\"brize_box\"", wifiUtil.getSSID())
+                        ){
+                    p.setMessage(getString(R.string.connect_package));
+                    p.show();
+                    btn_retry.setAlpha(0.4f);
+                    btn_retry.setEnabled(false);
+                    mMainHanler.removeMessages(MSG_DELAYSHOW);
+                    mMainHanler.sendMessageDelayed(handler.obtainMessage(MSG_DELAYSHOW), 5000);
+                    socketUtil.connect();
+                }else{
+                    Log.d(TAG, "onClick: connecting wifi ...");
+                    wifiUtil.removeNowConnectingID();
+                    handler.removeMessages(MSG_CONNECT);
+                    handler.sendMessageDelayed(handler.obtainMessage(MSG_CONNECT),300);
                 }
-          //    wifiUtil.removeNowConnectingID();
-               // handler.sendMessage(handler.obtainMessage(MSG_CONNECT));
+
             }
         });
 
@@ -173,11 +216,21 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(wifiReceiver);
+        socketUtil.setDone();
     }
 
     @Override
     public void onSuccess() {
         tv_socket.setText(R.string.connection_success);
+
+
+        btn_retry.setEnabled(false);
+        btn_retry.setAlpha(0.4f);
+        p.setMessage(getString(R.string.loading));
+        p.show();
+        mMainHanler.removeMessages(MSG_DELAYSHOW);
+        mMainHanler.sendMessageDelayed(handler.obtainMessage(MSG_DELAYSHOW), 5000);
+
         send();
     }
 
@@ -203,12 +256,13 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
             tv_receive.append(hex + " ");
         }
         if(checkReply(b)){
-            Toast.makeText(WifiConnectActivity.this, "yes", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(WifiConnectActivity.this, "yes", Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(WifiConnectActivity.this,SuccessActivity.class);
+            p.dismiss();
             startActivity(intent);
             finish();
         }else{
-            Toast.makeText(WifiConnectActivity.this, "no", Toast.LENGTH_SHORT).show();
+            Toast.makeText(WifiConnectActivity.this, R.string.t_fail, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -303,6 +357,14 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
                                 tv_status.append( wifiUtil.getSSID());
                                 img_wifi.setImageLevel(2);
                                 ll_socket.setVisibility(View.VISIBLE);
+
+                                btn_retry.setEnabled(false);
+                                btn_retry.setAlpha(0.4f);
+                                p.setMessage(getString(R.string.connect_package));
+                                p.show();
+                                mMainHanler.removeMessages(MSG_DELAYSHOW);
+                                mMainHanler.sendMessageDelayed(handler.obtainMessage(MSG_DELAYSHOW), 5000);
+
                                 socketUtil.connect();
                             } else {
                                 tv_status.setText(wifi_connected_wrong);

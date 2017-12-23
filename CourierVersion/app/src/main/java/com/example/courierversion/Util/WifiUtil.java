@@ -195,7 +195,7 @@ public class WifiUtil {
         }
 
         int wcgID = mWifiManager.addNetwork(wifiConfiguration);
-        Log.e("wcgID", wcgID+"true");
+        Log.i("wcgID", "wcgId "+wcgID);
         mWifiManager.enableNetwork(wcgID, true);
         mWifiManager.saveConfiguration();
         mWifiManager.reconnect();
