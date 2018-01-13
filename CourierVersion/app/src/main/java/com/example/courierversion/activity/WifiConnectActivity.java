@@ -164,11 +164,12 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
                     //连上了，则建立连接
                     socketUtil.connect();
                 }*/
-
+                //socket连接
                 if ((connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
                         &&
                         TextUtils.equals("\"brize_box\"", wifiUtil.getSSID())
                         ){
+                    Log.d(TAG, "onClick: socket connect...");
                     p.setMessage(getString(R.string.connect_package));
                     p.show();
                     btn_retry.setAlpha(0.4f);
@@ -176,9 +177,16 @@ public class WifiConnectActivity extends AppCompatActivity implements SocketUtil
                     mMainHanler.removeMessages(MSG_DELAYSHOW);
                     mMainHanler.sendMessageDelayed(handler.obtainMessage(MSG_DELAYSHOW), 5000);
                     socketUtil.connect();
-                }else{
-                    Log.d(TAG, "onClick: connecting wifi ...");
+                }else if(connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED){
+                    //断开连接再重连
+                    Log.d(TAG, "onClick: wifi  reConnecting...");
                     wifiUtil.removeNowConnectingID();
+                    handler.removeMessages(MSG_CONNECT);
+                    handler.sendMessageDelayed(handler.obtainMessage(MSG_CONNECT),300);
+                }else{
+                    //重连
+                    Log.d(TAG, "onClick: wifi connecting...");
+//                    wifiUtil.removeNowConnectingID();
                     handler.removeMessages(MSG_CONNECT);
                     handler.sendMessageDelayed(handler.obtainMessage(MSG_CONNECT),300);
                 }

@@ -33,15 +33,16 @@ public class SocketUtil {
     boolean work = false;
     Activity activity;
     SocketImp socketImp;
-    private static final String HOST = "172.16.77.1";
+    //    private static final String HOST = "172.16.77.1";
+    private static final String HOST = "192.168.4.1";
     private static final int PORT = 6341;
     private static final int TIMEOUT = 5000;
-    static final String TAG="xjp";
+    static final String TAG = "xjp";
 
     static final int MSG_CONNECT = 0;
     static final int MSG_RESULT = 1;
-    static final int MSG_SEND=2;
-    byte[] result=null;
+    static final int MSG_SEND = 2;
+    byte[] result = null;
 
     final int CALL_SUCCESS = 0;
     final int CALL_RESULT = 1;
@@ -62,8 +63,8 @@ public class SocketUtil {
                         doConnect();
                         break;
                     case MSG_RESULT:
-                        int i= msg.arg1;
-                        switch (i){
+                        int i = msg.arg1;
+                        switch (i) {
                             case CALL_SUCCESS:
                                 onCall(CALL_SUCCESS);
                                 break;
@@ -71,7 +72,7 @@ public class SocketUtil {
                                 onCall(CALL_TIMEOUT);
                                 break;
                             case CALL_RESULT:
-                                result= (byte[]) msg.obj;
+                                result = (byte[]) msg.obj;
                                 onCall(CALL_RESULT);
                                 break;
                             case CALL_FAIL:
@@ -83,8 +84,8 @@ public class SocketUtil {
                         try {
                             String s = (String) msg.obj;
                             doSend(s);
-                        }catch (NullPointerException e){
-                             break;
+                        } catch (NullPointerException e) {
+                            break;
                         }
                         break;
                 }
@@ -93,11 +94,10 @@ public class SocketUtil {
     }
 
 
-
     public void connect() {
-      //  sendMsg(MSG_CONNECT);
+        //  sendMsg(MSG_CONNECT);
         mHandler.removeMessages(MSG_CONNECT);
-        sendMsgDelay(MSG_CONNECT,300);
+        sendMsgDelay(MSG_CONNECT, 300);
     }
 
 
@@ -108,15 +108,15 @@ public class SocketUtil {
             s.connect(socketAddress, TIMEOUT);
             dos = new DataOutputStream(s.getOutputStream());
             dis = new DataInputStream(s.getInputStream());
-            sendMsg(MSG_RESULT,CALL_SUCCESS);
+            sendMsg(MSG_RESULT, CALL_SUCCESS);
             work = true;
             new ReadClass().start();
         } catch (SocketTimeoutException e) {
             e.printStackTrace();
-            sendMsg(MSG_RESULT,CALL_TIMEOUT);
+            sendMsg(MSG_RESULT, CALL_TIMEOUT);
         } catch (IOException e) {
             e.printStackTrace();
-            sendMsg(MSG_RESULT,CALL_FAIL);
+            sendMsg(MSG_RESULT, CALL_FAIL);
         }
     }
 
@@ -127,17 +127,17 @@ public class SocketUtil {
             while (work) {
                 try {
                     Log.d("xjpll", "run: 0");
-                    byte[] b=new byte[1024];
+                    byte[] b = new byte[1024];
                     Log.d("xjpll", "run: 1");
-                    int size=dis.read(b);//
-                    if(size<=0){
+                    int size = dis.read(b);//
+                    if (size <= 0) {
                         return;
                     }
-                    result=new byte[size];
-                    for(int i=0;i<size;i++){
-                        result[i]=b[i];
+                    result = new byte[size];
+                    for (int i = 0; i < size; i++) {
+                        result[i] = b[i];
                     }
-                    sendMsg(MSG_RESULT,CALL_RESULT,0,result);
+                    sendMsg(MSG_RESULT, CALL_RESULT, 0, result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -145,60 +145,64 @@ public class SocketUtil {
         }
     }
 
-    public void setDone(){
-        work=false;
+    public void setDone() {
+        work = false;
     }
 
-    public void send(String s){
-        sendMsg(MSG_SEND,0,s);
+    public void send(String s) {
+        sendMsg(MSG_SEND, 0, s);
     }
 
-    public void doSend(String s){
+    public void doSend(String s) {
         try {
-            byte[] b=getByte(s);
+            byte[] b = getByte(s);
             dos.write(b);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public  static byte[]  getByte(String s){
-        int length=s.length()+7;
-        byte[] b=new byte[length];
-        b[0]= (byte) 0xFF;
-        b[1]= (byte) 0xAA;
-        b[2]= (byte)(length-3);
-        b[3]= (byte)0x08;
-        char[] c=s.toCharArray();
-        byte sum=(byte)(b[0]+b[1]+b[2]+b[3]);
-        for(int i=0;i<s.length();i++){
-            b[4+i]=(byte)c[i];
-            sum+=b[4+i];
+    public static byte[] getByte(String s) {
+        int length = s.length() + 7;
+        byte[] b = new byte[length];
+        b[0] = (byte) 0xFF;
+        b[1] = (byte) 0xAA;
+        b[2] = (byte) (length - 3);
+        b[3] = (byte) 0x08;
+        char[] c = s.toCharArray();
+        byte sum = (byte) (b[0] + b[1] + b[2] + b[3]);
+        for (int i = 0; i < s.length(); i++) {
+            b[4 + i] = (byte) c[i];
+            sum += b[4 + i];
         }
-        b[s.length()+4]=(byte)(sum);
-        b[s.length()+5]=(byte)0xFF;
-        b[s.length()+6]=(byte)0x55;
+        b[s.length() + 4] = (byte) (sum);
+        b[s.length() + 5] = (byte) 0xFF;
+        b[s.length() + 6] = (byte) 0x55;
         SocketUtil.printHexString(b);
-        return  b;
+        return b;
     }
 
-    void sendMsg(int what){
+    void sendMsg(int what) {
         mHandler.sendMessage(mHandler.obtainMessage(what));
     }
-    void sendMsgDelay(int what,long delay){
-        mHandler.sendMessageDelayed(mHandler.obtainMessage(what),delay);
-    }
-    void sendMsg(int what,int arg1){
-        mHandler.sendMessage(mHandler.obtainMessage(what,arg1,0,null));
-    }
-    void sendMsg(int what,int arg1,String s){
-        mHandler.sendMessage(mHandler.obtainMessage(what,arg1,0,s));
-    }
-    void sendMsg(int what,int arg1,int arg2,Object o){
-        mHandler.sendMessage(mHandler.obtainMessage(what,arg1,0,o));
+
+    void sendMsgDelay(int what, long delay) {
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(what), delay);
     }
 
-   public  interface SocketImp {
+    void sendMsg(int what, int arg1) {
+        mHandler.sendMessage(mHandler.obtainMessage(what, arg1, 0, null));
+    }
+
+    void sendMsg(int what, int arg1, String s) {
+        mHandler.sendMessage(mHandler.obtainMessage(what, arg1, 0, s));
+    }
+
+    void sendMsg(int what, int arg1, int arg2, Object o) {
+        mHandler.sendMessage(mHandler.obtainMessage(what, arg1, 0, o));
+    }
+
+    public interface SocketImp {
         void onSuccess();
 
         void onTimeout();
@@ -245,7 +249,7 @@ public class SocketUtil {
         }
     }
 
-    public static void printHexString( byte[] b) {
+    public static void printHexString(byte[] b) {
         for (int i = 0; i < b.length; i++) {
             String hex = Integer.toHexString(b[i] & 0xFF);
             if (hex.length() == 1) {
